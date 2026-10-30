@@ -55,7 +55,7 @@ MTTG/
 
 ```
 cp js/env.example.js js/env.js     # rồi điền key và root
-python3 -m http.server 8000        # mở http://localhost:8000
+python3/py -m http.server 8000        # mở http://localhost:8000
 ```
 
 ## Deploy lên GitHub Pages
