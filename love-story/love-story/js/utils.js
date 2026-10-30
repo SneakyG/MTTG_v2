@@ -1,0 +1,11 @@
+// Tiện ích, hằng số và trạng thái dùng chung
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
+DAY=864e5,P=n=>String(n).padStart(2,0),iso=d=>d.getFullYear()+'-'+P(d.getMonth()+1)+'-'+P(d.getDate()),
+D=s=>new Date(s+'T00:00:00'),fmt=s=>D(s).toLocaleDateString('vi-VN'),dd=(a,b)=>Math.round((b-a)/DAY),
+today=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())},
+U=(id,w)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`,
+ST={tim_hieu:['Tìm hiểu','🌱','đang tìm hiểu nhau'],nguoi_yeu:['Người yêu','💕','đã yêu nhau'],vo_chong:['Vợ chồng','💍','đã là vợ chồng'],co_con:['Có con','👶','đã làm ba mẹ'],ve_gia:['Về già','🌅','đã bên nhau trọn đời']},DEF=Object.keys(ST),
+API='https://www.googleapis.com/drive/v3/files',FO=" and mimeType='application/vnd.google-apps.folder' and trashed=false",
+TABS=[['home','🏠','Trang chủ'],['mem','📖','Kỷ niệm'],['road','🗺️','Hành trình']];
+let X={items:[],stages:[]},tab='home',F={s:0,t:''},R=[],LB={l:[],i:0},err='',AV={};
+
