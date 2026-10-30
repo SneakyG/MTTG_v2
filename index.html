@@ -1,0 +1,119 @@
+<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#d9577b"><meta name="apple-mobile-web-app-capable" content="yes"><title>Our Love Story</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E💕%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600&family=Fraunces:wght@600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f1f7;--ink:#2d1b3a;--mu:#7d6a88;--ln:#e3d6e8;--p:#d9577b;--g:#e9a94b;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root{--bg:#170f1f;--ink:#f3e9f5;--mu:#a996b5;--ln:#35254a}}
+*{box-sizing:border-box}
+body{margin:0 auto;max-width:640px;background:var(--bg);color:var(--ink);font:15px/1.55 'Be Vietnam Pro',system-ui,sans-serif;padding:0 20px 96px}
+h1,h2,.fr,.days{font-family:Fraunces,Georgia,serif;font-weight:600}
+h1{font-size:34px;line-height:1.1;margin:28px 0 4px}h2{font-size:22px;margin:32px 0 8px}h4{margin:22px 0 6px;font-size:13px;color:var(--mu)}
+small,.mu{color:var(--mu)}.er{color:var(--p)}
+.avs{display:flex;margin-top:28px}.avs+h1{margin-top:12px}.av{width:68px;height:68px;border-radius:50%;object-fit:cover;border:3px solid var(--bg);background:var(--ln)}.av+.av{margin-left:-16px}span.av{display:grid;place-items:center;font:600 26px Fraunces,Georgia,serif;color:var(--p)}
+.days{font-size:22px}.days b{font-size:68px;line-height:1;color:var(--p)}
+.rd{display:flex;margin:26px 0 4px;position:relative}.rd:before{content:'';position:absolute;left:8%;right:8%;top:21px;border-top:2px dashed var(--ln)}
+.nd{flex:1;text-align:center;font-size:11px;color:var(--mu);position:relative}.nd.cur{color:var(--ink);font-weight:600}
+.nd i,.sc i{display:grid;place-items:center;flex:none;width:42px;height:42px;margin:0 auto 4px;border-radius:50%;font-style:normal;font-size:20px;background:var(--bg);border:2px dashed var(--ln)}
+.done i{background:var(--p);border:2px solid var(--p)}.cur i{background:var(--g);border:2px solid var(--g);animation:gl 2.6s ease-in-out infinite}
+@keyframes gl{50%{box-shadow:0 0 0 8px #e9a94b33}}@media(prefers-reduced-motion:reduce){.cur i{animation:none}}
+.row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-top:1px solid var(--ln)}.rs{color:var(--p)}
+.bt{border:1px solid var(--p);color:var(--p);background:none;border-radius:99px;padding:8px 16px;margin:0 6px 6px 0;font:inherit;font-weight:600}
+.ch{border:1px solid var(--ln);background:none;color:var(--mu);border-radius:99px;padding:5px 12px;margin:0 6px 6px 0;font:inherit;font-size:13px}.ch.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.m{border-top:1px solid var(--ln);padding:14px 0 6px}
+.mm{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:8px}.mm.o{grid-template-columns:1fr}.mm.o .ce{aspect-ratio:4/3}
+.ce{position:relative;aspect-ratio:1;overflow:hidden;border-radius:6px;background:var(--ln)}.ce img{width:100%;height:100%;object-fit:cover;display:block}
+.ce.v:after{content:'▶';position:absolute;inset:0;display:grid;place-items:center;color:#fff;font-size:22px;text-shadow:0 0 6px #000}
+.sc{display:flex;gap:14px;padding:16px 0;border-top:1px solid var(--ln)}.sc.next{opacity:.55}.sc i{margin:0}.sc .mm{grid-template-columns:repeat(4,1fr)}
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:center;background:var(--bg);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;max-width:210px;border:0;background:none;padding:9px 0;color:var(--mu);font:inherit;font-size:11px}nav b{display:block;font-size:19px;font-weight:400}nav .on{color:var(--p);font-weight:600}
+#lb{position:fixed;inset:0;background:#000d;display:none;flex-direction:column;justify-content:center;z-index:9}#lb.on{display:flex}
+#lb .lm{display:flex;justify-content:center}#lb img{max-width:100%;max-height:78vh;object-fit:contain}#lb iframe{width:100%;height:70vh;border:0}
+#lb button{position:absolute;border:0;background:#0006;color:#fff;font-size:26px;width:44px;height:44px;border-radius:50%}
+.lx{top:calc(12px + env(safe-area-inset-top,0px));right:12px}.lp{left:8px;top:50%}.lq{right:8px;top:50%}
+#lb p{color:#fff;text-align:center;margin:10px 16px 0;font-size:13px}#lb a{color:var(--g)}
+</style></head><body>
+<div id="app"></div><nav id="nav"></nav><div id="lb"></div>
+<script>
+/* CÁCH DÙNG
+1) key: Google API key (bật Drive API, giới hạn referrer https://TENBAN.github.io/*)
+2) root: ID thư mục MTTG (đoạn sau /folders/ trong link), chia sẻ "Anyone with the link: Viewer"
+3) current: số giai đoạn hiện tại (2 = người yêu). start: ngày bắt đầu từng giai đoạn, vd {2:'2024-02-14'}
+4) events: ngày đặc biệt lặp mỗi năm, vd [{n:'Sinh nhật em',d:'2000-05-20'}] */
+const CFG={key:'',root:'',a:'MTrieu',b:'TGiang',current:2,start:{},cover:'',events:[]};
+
+const $=s=>document.querySelector(s),E=s=>String(s??'').replace(/[&<>"']/g,c=>'&#'+c.charCodeAt(0)+';'),
+DAY=864e5,P=n=>String(n).padStart(2,0),iso=d=>d.getFullYear()+'-'+P(d.getMonth()+1)+'-'+P(d.getDate()),
+D=s=>new Date(s+'T00:00:00'),fmt=s=>D(s).toLocaleDateString('vi-VN'),dd=(a,b)=>Math.round((b-a)/DAY),
+today=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate())},
+U=(id,w)=>`https://drive.google.com/thumbnail?id=${id}&sz=w${w}`,
+ST={tim_hieu:['Tìm hiểu','🌱','đang tìm hiểu nhau'],nguoi_yeu:['Người yêu','💕','đã yêu nhau'],vo_chong:['Vợ chồng','💍','đã là vợ chồng'],co_con:['Có con','👶','đã làm ba mẹ'],ve_gia:['Về già','🌅','đã bên nhau trọn đời']},DEF=Object.keys(ST),
+API='https://www.googleapis.com/drive/v3/files',FO=" and mimeType='application/vnd.google-apps.folder' and trashed=false",
+TABS=[['home','🏠','Trang chủ'],['mem','📖','Kỷ niệm'],['road','🗺️','Hành trình']];
+let X={items:[],stages:[]},tab='home',F={s:0,t:''},R=[],LB={l:[],i:0},err='',AV={};
+
+async function ls(q,f){let o=[],t='';do{const r=await fetch(`${API}?q=${encodeURIComponent(q)}&fields=nextPageToken,files(${f})&pageSize=1000&key=${CFG.key}${t?'&pageToken='+t:''}`),j=await r.json();if(!r.ok)throw Error(j.error?.message||r.status);o=o.concat(j.files);t=j.nextPageToken}while(t);return o}
+const par=a=>'('+a.map(i=>`'${i}' in parents`).join(' or ')+')';
+function build(sf,it){X.items=it;const N=Math.max(DEF.length,...sf.map(f=>f.n));
+X.stages=[...Array(N)].map((_,i)=>{const n=i+1,f=sf.find(x=>x.n==n),sl=f?f.slug:DEF[i],m=ST[sl]||[(sl||'Giai đoạn '+n).replace(/_/g,' '),'💞','đã bên nhau'],a=it.filter(x=>x.s==n),ds=a.map(x=>x.d).sort();
+return{n,l:m[0],e:m[1],v:m[2],st:CFG.start[n]||ds[0]||'',last:ds[ds.length-1]||'',np:a.filter(x=>!x.v).length,nv:a.filter(x=>x.v).length}})}
+async function load(){
+const all=await ls(`'${CFG.root}' in parents`+FO,'id,name'),av=all.filter(f=>/ava/i.test(f.name)),
+pa=av.length?ls(par(av.map(f=>f.id))+FO,'id').then(x=>ls(par([...av,...x].map(f=>f.id))+" and mimeType contains 'image/' and trashed=false",'id,name')).catch(()=>[]):Promise.resolve([]),
+sf=all.filter(f=>!/ava/i.test(f.name)).map(f=>{const m=/^(\d+)_(.+)$/.exec(f.name);return m&&{id:f.id,n:+m[1],slug:m[2]}}).filter(Boolean),
+mf=sf.length?await ls(par(sf.map(f=>f.id))+FO,'id,parents'):[],by={};
+mf.forEach(f=>by[f.id]=sf.find(s=>s.id==f.parents[0]).n);
+const fl=mf.length?await ls(par(mf.map(f=>f.id))+" and mimeType!='application/vnd.google-apps.folder' and trashed=false",'id,name,mimeType,parents'):[],it=[];
+fl.forEach(f=>{const m=/^(\d{4})(\d{2})(\d{2})(.*?)(\.[^.]*)?$/.exec(f.name);if(!m||+m[2]<1||+m[2]>12||+m[3]<1||+m[3]>31)return;const c=m[4].replace(/^[\s_-]+/,'');
+it.push({id:f.id,d:`${m[1]}-${m[2]}-${m[3]}`,s:by[f.parents[0]],v:f.mimeType.startsWith('video/')?1:0,c:/\p{L}/u.test(c)?c:''})});
+it.sort((a,b)=>b.d.localeCompare(a.d));build(sf,it);
+const pics=(await pa).sort((x,y)=>x.name.localeCompare(y.name)),bn=f=>f.name.replace(/\.[^.]*$/,'').toLowerCase(),pk=(n,i)=>(pics.find(f=>bn(f)==n.toLowerCase())||pics[i])?.id;
+AV={a:pk(CFG.a,0),b:pk(CFG.b,1)};try{localStorage.mttg=JSON.stringify({sf,it,AV})}catch(e){}}
+try{const c=JSON.parse(localStorage.mttg||'null');if(c){build(c.sf,c.it);AV=c.AV||{}}}catch(e){}
+
+function ymd(a,b){let y=b.getFullYear()-a.getFullYear(),m=b.getMonth()-a.getMonth(),d=b.getDate()-a.getDate();if(d<0){m--;d+=new Date(b.getFullYear(),b.getMonth(),0).getDate()}if(m<0){y--;m+=12}return[y,m,d]}
+function ups(s,cs){const t=today(),L=[],v=cs.v.replace('đã ',''),add=(n,d,o)=>d>=t&&L.push({n,d,k:dd(t,d),...o});
+[100,200,300,365,500,666,777,888,999,1000,1111,1314,1500,2000,2500,3000,3650,5000].forEach(n=>add(n+' ngày '+v,new Date(s.getFullYear(),s.getMonth(),s.getDate()+n)));
+for(let y=1;y<80;y++){const d=new Date(s.getFullYear()+y,s.getMonth(),s.getDate());if(d>=t){add('Kỷ niệm '+y+' năm',d);break}}
+CFG.events.forEach(e=>{const o=D(e.d),d=new Date(t.getFullYear(),o.getMonth(),o.getDate());if(d<t)d.setFullYear(d.getFullYear()+1);add(e.n,d)});
+return L.sort((a,b)=>a.d-b.d).slice(0,5)}
+
+const lst=l=>R.push(l)-1,cell=(x,l,i)=>`<div class="ce${x.v?' v':''}" data-a=lb data-l=${l} data-i=${i}><img loading=lazy src="${U(x.id,400)}" alt=""></div>`,V={};
+V.home=()=>{const t=today(),cs=X.stages[CFG.current-1]||X.stages[0],s=D(cs.st||iso(t)),[y,m,d]=ymd(s,t),np=X.items.filter(x=>!x.v).length,
+od=X.items.filter(x=>+x.d.slice(5,7)==t.getMonth()+1&&+x.d.slice(8)==t.getDate()&&+x.d.slice(0,4)<t.getFullYear()).slice(0,6),lo=od.length?lst(od):0;
+return `<div class=avs>${[[AV.a,CFG.a],[AV.b,CFG.b]].map(([id,n])=>id?`<img class=av src="${U(id,200)}" alt="${E(n)}">`:`<span class=av>${E(n[0])}</span>`).join('')}</div><h1>${E(CFG.a)} và ${E(CFG.b)}</h1><div class=mu>${cs.v}</div><div class=days><b>${dd(s,t)}</b> ngày</div><small>Từ ${s.toLocaleDateString('vi-VN')}: ${y} năm ${m} tháng ${d} ngày, thêm <span id=hms>00:00:00</span></small>
+<div class=rd>${X.stages.map(g=>`<div class="nd ${g.n<CFG.current?'done':g.n==CFG.current?'cur':'next'}" data-a=sf data-i=${g.n}><i>${g.e}</i>${E(g.l)}</div>`).join('')}</div>
+${od.length?`<h2>Ngày này năm xưa</h2><div class=mm>${od.map((x,i)=>cell(x,lo,i)).join('')}</div>`:''}
+<h2>Sắp tới</h2>${ups(s,cs).map(u=>`<div class=row><div><b>${E(u.n)}</b><br><small>${u.d.toLocaleDateString('vi-VN')}</small></div><b class=rs>${u.k?'còn '+u.k+' ngày':'Hôm nay'}</b></div>`).join('')}
+<h2>Kho kỷ niệm</h2><p>${np} ảnh, ${X.items.length-np} clip, ${new Set(X.items.map(x=>x.d)).size} ngày đáng nhớ.</p>
+<p><small>Muốn thêm kỷ niệm: tải ảnh hoặc clip vào thư mục giai đoạn, trong images hoặc videos, đặt tên yyyyMMdd (vd 20240214.jpg), rồi bấm Cập nhật.</small></p>
+<button class=bt data-a=dr>Mở thư mục Drive</button><button class=bt data-a=rf>Cập nhật</button>`};
+V.mem=()=>{const L=X.items.filter(x=>(!F.s||x.s==F.s)&&(!F.t||(F.t=='v')==!!x.v)),G={},l=lst(L),s0=D(X.stages[CFG.current-1].st||iso(today()));
+L.forEach(x=>(G[x.d]??=[]).push(x));let h='',mo='',i=0;
+for(const d of Object.keys(G).sort().reverse()){const g=G[d],n=dd(s0,D(d)),st=X.stages[g[0].s-1],cap=[...new Set(g.map(x=>x.c).filter(Boolean))].join(', '),
+meta=[n>=0?'ngày thứ '+n:'',st?st.e+' '+st.l:''].filter(Boolean).join(', ');
+if(d.slice(0,7)!=mo){mo=d.slice(0,7);h+=`<h4>Tháng ${+d.slice(5,7)}/${d.slice(0,4)}</h4>`}
+h+=`<div class=m><div class=row style="border:0;padding:0"><b>${fmt(d)}</b><small>${meta}</small></div>${cap?`<div>${E(cap)}</div>`:''}<div class="mm${g.length==1?' o':''}">${g.map(x=>cell(x,l,i++)).join('')}</div></div>`}
+return `<h2>Kỷ niệm</h2><div>${[[0,'Tất cả giai đoạn'],...X.stages.map(g=>[g.n,g.e+' '+g.l])].map(([n,t])=>`<button class="ch${F.s==n?' on':''}" data-a=fs data-i=${n}>${E(t)}</button>`).join('')}</div><div>${[['','Ảnh và clip'],['i','Ảnh'],['v','Clip']].map(([k,t])=>`<button class="ch${F.t==k?' on':''}" data-a=ft data-i="${k}">${t}</button>`).join('')}</div>${h||'<p class=mu>Chưa có kỷ niệm nào ở đây.</p>'}`};
+V.road=()=>`<h2>Con đường của mình</h2>${X.stages.map(g=>{const k=g.n<CFG.current?'done':g.n==CFG.current?'cur':'next',nx=X.stages[g.n],en=k=='cur'?iso(today()):(nx&&nx.st)||g.last,th=X.items.filter(x=>x.s==g.n&&!x.v).slice(0,4),l=lst(th),
+rg=k=='next'?'Chặng đường phía trước':g.st?`Từ ${fmt(g.st)} đến ${k=='cur'?'nay':en?fmt(en):'…'}, ${en?dd(D(g.st),D(en)):0} ngày`:'Chưa có ảnh hay clip';
+return `<div class="sc ${k}"><i>${g.e}</i><div><b class=fr>${g.n}. ${E(g.l)}</b>${k=='cur'?' <small>đang ở đây</small>':''}<br><small>${rg}</small><br><small>${g.np} ảnh, ${g.nv} clip</small>${th.length?`<div class=mm style="margin:8px 0">${th.map((x,i)=>cell(x,l,i)).join('')}</div>`:''}${g.np+g.nv?`<button class=bt data-a=sf data-i=${g.n}>Xem kỷ niệm</button>`:''}</div></div>`}).join('')}`;
+
+function render(){R=[];const a=$('#app');
+if(!CFG.key||!CFG.root)return a.innerHTML='<h1>Cần cấu hình</h1><p>Mở file index.html, điền <b>key</b> (Google API key) và <b>root</b> (ID thư mục MTTG) trong khối CFG ở đầu phần script.</p>';
+a.innerHTML=(err?`<p class=er>Không tải được từ Google Drive: ${E(err)}<br><small>Kiểm tra API key (đã bật Drive API, đúng domain), ID thư mục, và thư mục đã chia sẻ “Anyone with the link”.</small></p>`:'')+(X.stages.length?V[tab]():err?'':'<p class=mu>Đang tải kỷ niệm từ Google Drive…</p>');
+$('#nav').innerHTML=TABS.map(([k,i,n])=>`<button class="${k==tab?'on':''}" data-a=go data-k=${k}><b>${i}</b>${n}</button>`).join('');tick()}
+const tick=()=>{const el=$('#hms');if(el){const n=new Date();el.textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(P).join(':')}};setInterval(tick,1000);
+
+const lb=$('#lb'),step=n=>{LB.i=(LB.i+n+LB.l.length)%LB.l.length;show()};
+function show(){const x=LB.l[LB.i];if(!x)return;lb.className='on';
+lb.innerHTML=`<button class=lx data-a=lc>✕</button>${LB.l.length>1?'<button class=lp data-a=lp>‹</button><button class=lq data-a=lq>›</button>':''}<div class=lm>${x.v?`<iframe src="https://drive.google.com/file/d/${x.id}/preview" allow="autoplay;fullscreen" allowfullscreen></iframe>`:`<img src="${U(x.id,1600)}" alt="">`}</div><p>${fmt(x.d)}${x.c?', '+E(x.c):''}. <a href="https://drive.google.com/file/d/${x.id}/view" target=_blank rel=noopener>Mở bản gốc</a></p>`}
+let tx=0;lb.addEventListener('touchstart',e=>{tx=e.touches[0].clientX},{passive:true});lb.addEventListener('touchend',e=>{const d=e.changedTouches[0].clientX-tx;if(Math.abs(d)>60)step(d<0?1:-1)});
+addEventListener('keydown',e=>{if(!lb.className)return;if(e.key=='Escape')ACT.lc();if(e.key=='ArrowRight')step(1);if(e.key=='ArrowLeft')step(-1)});
+
+const ACT={go:k=>{tab=k;render();scrollTo(0,0)},fs:(k,i)=>{F.s=+i;render()},ft:(k,i)=>{F.t=i;render()},sf:(k,i)=>{F.s=+i;F.t='';tab='mem';render();scrollTo(0,0)},
+lb:(k,i,b)=>{LB={l:R[b.dataset.l],i:+i};show()},lc:()=>{lb.className='';lb.innerHTML=''},lp:()=>step(-1),lq:()=>step(1),
+dr:()=>window.open('https://drive.google.com/drive/folders/'+CFG.root,'_blank'),
+rf:async(k,i,b)=>{b.textContent='Đang cập nhật…';err='';try{await load()}catch(e){err=String(e.message||e)}render()}};
+document.addEventListener('click',e=>{const b=e.target.closest('[data-a]');if(b)ACT[b.dataset.a]?.(b.dataset.k,b.dataset.i,b)});
+render();if(CFG.key&&CFG.root)load().catch(e=>{err=String(e.message||e)}).finally(render);
+</script></body></html>
