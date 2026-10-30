@@ -64,67 +64,72 @@ function build(sf, it) {
 // 3. TẢI VÀ XỬ LÝ TOÀN BỘ DỮ LIỆU TỪ GOOGLE DRIVE
 // ==========================================
 async function load() {
-  // Lấy danh sách toàn bộ thư mục cấp 1 bên trong thư mục gốc (CFG.root)
   const all = await ls(`'${CFG.root}' in parents` + FO, 'id,name'),
-        
-        // Lọc các thư mục chứa ảnh đại diện (avatar)
-        av = all.filter(f => /ava/i.test(f.name)),
-        
-        // Lấy danh sách file ảnh hợp lệ bên trong thư mục ava (nếu có)
-        pa = av.length ? ls(par(av.map(f => f.id)) + FO, 'id').then(x => ls(par([...av, ...x].map(f => f.id)) + " and mimeType contains 'image/' and trashed=false", 'id,name')).catch(() => []) : Promise.resolve([]),
-        
-        // Lọc các thư mục giai đoạn theo định dạng số_tên (ví dụ: 1_yeu_nhau)
-        sf = all.filter(f => !/ava/i.test(f.name)).map(f => {
-          const m = /^(\d+)_(.+)$/.exec(f.name);
-          return m && { id: f.id, n: +m[1], slug: m[2] };
+        avatar = all.find(f => f.name.trim().toLowerCase() == 'avatar'),
+        sf = all.map(f => {
+          const m = /^([1-5])(?:[_\s-]+(.*))?$/.exec(f.name.trim());
+          return m && {
+            id: f.id,
+            n: +m[1],
+            slug: (m[2] || DEF[+m[1] - 1]).trim().toLowerCase().replace(/[\s-]+/g, '_')
+          };
         }).filter(Boolean),
-        
-        // Lấy danh sách các thư mục con bên trong các giai đoạn
-        mf = sf.length ? await ls(par(sf.map(f => f.id)) + FO, 'id,parents') : [],
-        by = {};
+        stageFolders = sf.length ? await lsIn(sf.map(f => f.id), FO, 'id,name,parents') : [],
+        stageByFolder = {};
 
-  mf.forEach(f => by[f.id] = sf.find(s => s.id == f.parents[0]).n);
+  stageFolders.forEach(f => {
+    const stage = sf.find(s => s.id == f.parents[0]);
+    if (stage) stageByFolder[f.id] = stage.n;
+  });
 
-  // Đọc danh sách thư mục con cấp sâu hơn (nếu có) để trích xuất ngày tháng từ tên thư mục/file
-  const dfs = mf.length ? await lsIn(mf.map(f => f.id), FO, 'id,name,parents') : [],
-        dm = {};
+  const mediaFolders = stageFolders.filter(f => /^(images|videos)$/i.test(f.name.trim())),
+        datesInMedia = mediaFolders.length ? await lsIn(mediaFolders.map(f => f.id), FO, 'id,name,parents') : [],
+        dateFolders = [...stageFolders, ...datesInMedia].filter(f => {
+          const m = /^(\d{4})(\d{2})(\d{2})(.*)$/.exec(f.name.trim());
+          if (!m) return false;
+          const d = new Date(+m[1], +m[2] - 1, +m[3]);
+          return d.getFullYear() == +m[1] && d.getMonth() == +m[2] - 1 && d.getDate() == +m[3];
+        }),
+        stageByMedia = {};
 
-  dfs.forEach(f => {
-    // Phân tích cú pháp ngày tháng từ tên thư mục (Định dạng: YYYYMMDD[Mô_tả])
-    const m = /^(\d{4})(\d{2})(\d{2})(.*)$/.exec(f.name);
-    if (!m || +m[2] < 1 || +m[2] > 12 || +m[3] < 1 || +m[3] > 31) return;
-    
+  mediaFolders.forEach(f => {
+    const stage = stageFolders.find(s => s.id == f.parents[0]);
+    if (stage) stageByMedia[f.id] = stageByFolder[stage.id];
+  });
+
+  const dm = {};
+  dateFolders.forEach(f => {
+    const m = /^(\d{4})(\d{2})(\d{2})(.*)$/.exec(f.name.trim()),
+          parentStage = stageByFolder[f.parents[0]],
+          parentMedia = stageByMedia[f.parents[0]],
+          stage = parentStage || parentMedia;
+    if (!stage) return;
     const c = m[4].replace(/^[\s_-]+/, '');
     dm[f.id] = {
-      d: `${m[1]}-${m[2]}-${m[3]}`,           // Chuẩn hóa ngày (YYYY-MM-DD)
-      s: by[f.parents[0]],                   // Thuộc giai đoạn số mấy
-      c: /\p{L}/u.test(c) ? c : ''           // Mô tả (Caption) nếu có chứa chữ cái
+      d: `${m[1]}-${m[2]}-${m[3]}`,
+      s: stage,
+      c: /\p{L}/u.test(c) ? c : ''
     };
   });
 
-  // Truy vấn lấy toàn bộ file ảnh/video thực tế bên trong các thư mục hợp lệ
   const fl = Object.keys(dm).length ? await lsIn(Object.keys(dm), MEDIA, 'id,name,mimeType,parents') : [],
-        it = [];
-
-  fl.sort((a, b) => a.name.localeCompare(b.name)).forEach(f => {
-    const x = dm[f.parents[0]];
-    if (x) {
-      it.push({
-        id: f.id,
-        d: x.d,
-        s: x.s,
-        v: f.mimeType[0] == 'v' ? 1 : 0,     // Phân loại: Video (1) hoặc Ảnh (0) dựa vào mimeType bắt đầu bằng 'v'
-        c: x.c
-      });
-    }
-  });
+        it = fl.map(f => {
+          const x = dm[f.parents[0]];
+          return x && {
+            id: f.id,
+            d: x.d,
+            s: x.s,
+            v: f.mimeType.startsWith('video/') ? 1 : 0,
+            c: x.c
+          };
+        }).filter(Boolean);
 
   // Sắp xếp danh sách kỷ niệm theo thứ tự thời gian giảm dần (mới nhất lên trên)
   it.sort((a, b) => b.d.localeCompare(a.d));
   build(sf, it);
 
-  // Xử lý và gán ảnh đại diện (Avatar) cho 2 người
-  const pics = (await pa).sort((x, y) => x.name.localeCompare(y.name)),
+  // Avatar là ảnh nằm trực tiếp trong thư mục avatar, không theo cấu trúc thư mục ngày.
+  const pics = avatar ? await ls(`'${avatar.id}' in parents and mimeType contains 'image/' and trashed=false`, 'id,name') : [],
         bn = f => f.name.replace(/\.[^.]*$/, '').toLowerCase(),
         pk = (n, i) => (pics.find(f => bn(f) == n.toLowerCase()) || pics[i])?.id;
 
