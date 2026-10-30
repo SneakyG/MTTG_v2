@@ -27,17 +27,23 @@ love-story/
 
 ```
 MTTG/
-├── 1_tim_hieu/   (images/, videos/)
-├── 2_nguoi_yeu/  (images/, videos/)
-├── 3_vo_chong/   (images/, videos/)
-├── 4_co_con/     (images/, videos/)
-├── 5_ve_gia/     (images/, videos/)
-└── 6_avatar/     MTrieu.jpg, TGiang.jpg
+├── 1_tim_hieu/
+│   ├── images/
+│   │   └── 20240214/     ảnh của ngày 14/02/2024, tên file tuỳ ý
+│   └── videos/
+│       └── 20240214/     clip của ngày đó, tên file tuỳ ý
+├── 2_nguoi_yeu/          (cùng cấu trúc)
+├── 3_vo_chong/           (cùng cấu trúc)
+├── 4_co_con/             (cùng cấu trúc)
+├── 5_ve_gia/             (cùng cấu trúc)
+└── avatar/               MTrieu.jpg, TGiang.jpg
 ```
 
-- Tên file là `yyyyMMdd`, vd `20240214.jpg`. Thêm chữ sau ngày để làm chú thích: `20240214_Valentine đầu tiên.jpg`.
-- Thư mục avatar có tên chứa chữ "ava"; ảnh đặt tên theo `a` và `b` trong `js/config.js`.
-- Thêm kỷ niệm: bỏ file vào đúng thư mục trên Drive, rồi bấm "Cập nhật" trong app.
+- Thư mục giai đoạn bắt đầu bằng số `1` đến `5`, theo sau là `_` và tên tuỳ chọn (vd `1_tim_hieu`, `2_nguoi_yeu`). Bên trong đặt `images` và/hoặc `videos`; có thể bỏ qua một trong hai nếu không dùng.
+- Trong `images` hoặc `videos`, tạo thư mục ngày tên `yyyyMMdd`; file bên trong đặt tên gì cũng được. Thêm chữ sau ngày để làm chú thích: thư mục `20240214_Valentine đầu tiên`. Thư mục ngày cũng có thể nằm trực tiếp trong thư mục giai đoạn.
+- Ảnh và clip cùng ngày (ở `images` và `videos`) được gom chung một ngày trong app.
+- Avatar dùng quy tắc riêng: tạo thư mục tên `avatar` ngay dưới `MTTG`, đặt ảnh trực tiếp bên trong và đặt tên theo `a` và `b` trong `js/config.js`.
+- Thêm kỷ niệm: tạo thư mục ngày trong `images` hoặc `videos`, bỏ file vào, rồi bấm "Cập nhật" trong app.
 
 ## Thiết lập một lần
 
