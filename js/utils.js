@@ -8,5 +8,8 @@ im=(id,w,x='')=>`<img ${x} data-f="${id},${w}" referrerpolicy=no-referrer src="$
 ST={tim_hieu:['Tìm hiểu','🌱','đang tìm hiểu nhau'],nguoi_yeu:['Người yêu','💕','đã yêu nhau'],vo_chong:['Vợ chồng','💍','đã là vợ chồng'],co_con:['Có con','👶','đã làm ba mẹ'],ve_gia:['Về già','🌅','đã bên nhau trọn đời']},DEF=Object.keys(ST),
 API='https://www.googleapis.com/drive/v3/files',FO=" and mimeType='application/vnd.google-apps.folder' and trashed=false",
 TABS=[['home','🏠','Trang chủ'],['mem','📖','Kỷ niệm'],['road','🗺️','Hành trình']];
-let X={items:[],stages:[]},tab='home',F={s:0,t:'',y:0},Q='',opened=0,R=[],LB={l:[],i:0},err='',AV={},AUD='';
+let X={items:[],stages:[],dfs:[],mfs:[],sf:[]},tab='home',F={s:0,t:'',y:0},Q='',opened=0,R=[],LB={l:[],i:0},err='',AV={},AUD='',EVF='',EVT='',EV=[],SEL=new Set(),selm=0,CURL=[],TK='',TX=0;
 
+// sap_toi.txt: mỗi dòng "yyyy-MM-dd|Tên sự kiện|y" (y = lặp hằng năm, bỏ trống = một lần); dòng bắt đầu bằng # là ghi chú
+function evParse(t){EV=(t||'').split(/\r?\n/).map(l=>l.trim()).filter(l=>l&&l[0]!='#').map(l=>{const[d,n,r]=l.split('|');return /^\d{4}-\d{2}-\d{2}$/.test(d||'')&&n&&n.trim()?{d,n:n.trim(),r:(r||'').trim()=='y'}:null}).filter(Boolean)}
+const evText=a=>'# Sắp tới - mỗi dòng: yyyy-MM-dd|Tên sự kiện|y (y = lặp hằng năm)\n'+a.map(e=>`${e.d}|${e.n}${e.r?'|y':''}`).join('\n')+'\n';

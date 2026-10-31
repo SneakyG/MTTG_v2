@@ -3,7 +3,7 @@ const CFG={
   ...(window.ENV||{}),   // key, root
   a:'MTrieu', b:'TGiang', // tên hai bạn (cũng là tên file ảnh trong thư mục avatar)
   current:2,              // giai đoạn hiện tại: 1 tìm hiểu, 2 người yêu, 3 vợ chồng, 4 có con, 5 về già
-  start:{2:'2026-08-30'},               // ngày bắt đầu từng giai đoạn, vd {2:'2024-02-14'}; bỏ trống = lấy ngày của ảnh đầu tiên
+  start:{},               // ngày bắt đầu từng giai đoạn, vd {2:'2024-02-14'}; bỏ trống = lấy ngày của ảnh đầu tiên
   events:[],              // ngày đặc biệt lặp mỗi năm, vd [{n:'Sinh nhật em',d:'2000-05-20'}]
   music:'assets/music/the-gioi-cua-anh.mp3', // nhạc nền; không có file này thì app tự tìm file mp3 trong thư mục MTTG trên Drive
   wishes:[ // lời chúc trong popup khi bấm trái tim; {a} và {b} là tên hai bạn

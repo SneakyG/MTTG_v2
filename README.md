@@ -19,6 +19,7 @@ love-story/
 │   ├── splash.js                 # màn hình mở đầu, nền động, hiệu ứng tim
 │   ├── music.js                  # nhạc nền, bật tắt có nhỏ dần/to dần
 │   ├── wish.js                   # hiệu ứng dung hợp và popup lời chúc
+│   ├── edit.js                   # đăng nhập Google, thêm/xoá ảnh-clip, mục Sắp tới
 │   └── main.js                   # vẽ giao diện, sự kiện, khởi động
 ├── assets/favicon.svg, assets/music/   # đặt the-gioi-cua-anh.mp3 vào assets/music/
 ├── .github/workflows/deploy.yml  # tự deploy, tạo env.js từ GitHub Secrets
@@ -52,6 +53,19 @@ MTTG/
 1. Google Cloud Console: tạo project, bật **Google Drive API**, tạo **API key**. Giới hạn key: HTTP referrers `https://TENBAN.github.io/*` (thêm `http://localhost:8000/*` nếu chạy ở máy) và chỉ cho phép Google Drive API.
 2. Trên Drive, chia sẻ thư mục MTTG ở chế độ "Anyone with the link: Viewer". ID thư mục là đoạn sau `/folders/` trong link.
 3. Sửa `js/config.js`: `current`, `start`, `events`.
+
+## Thêm/xoá ảnh, clip và sửa mục "Sắp tới" (cần đăng nhập Google)
+
+Xem dữ liệu chỉ cần API key. Ghi lên Drive thì cần thêm OAuth Client ID:
+
+1. Google Cloud Console → APIs & Services → OAuth consent screen: chọn External, điền tên app, thêm email của bạn và người ấy vào **Test users**.
+2. Credentials → Create credentials → OAuth client ID → Web application. Authorized JavaScript origins: `https://TENBAN.github.io` (và `http://localhost:8000` nếu chạy ở máy). Copy **Client ID** vào `js/env.js` (mục `clientId`) hoặc Secret `GOOGLE_CLIENT_ID`.
+3. Chia sẻ thư mục MTTG cho tài khoản của người ấy với quyền **Editor** (tài khoản chủ thư mục đã có quyền).
+4. Lần đầu bấm Thêm, Xoá hoặc Lưu sẽ hiện cửa sổ đăng nhập Google. Nếu có cảnh báo "Google chưa xác minh ứng dụng": Nâng cao, rồi tiếp tục. Phiên đăng nhập hết hạn sau khoảng 1 giờ, app tự hỏi lại.
+
+- **Thêm:** chọn loại (ảnh hoặc clip), chọn thư mục ngày có sẵn hoặc tạo mới theo ngày. Thư mục mới nằm trong giai đoạn hiện tại, lưu vào `images/yyyyMMdd` hoặc `videos/yyyyMMdd`.
+- **Xoá:** bấm "Chọn để xoá", chọn ảnh/clip rồi Xoá. Tệp chuyển vào thùng rác Drive, khôi phục được trong 30 ngày.
+- **Sắp tới:** lưu trong file `sap_toi.txt` ở thư mục MTTG (mỗi dòng `yyyy-MM-dd|Tên|y`). Mục đã qua ngày tự biến mất, mục lặp hằng năm thì chuyển sang năm sau.
 
 ## Chạy ở máy
 
