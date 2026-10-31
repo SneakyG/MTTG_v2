@@ -16,8 +16,11 @@ love-story/
 │   ├── milestones.js             # thời gian bên nhau, mốc sắp tới
 │   ├── views.js                  # Trang chủ, Kỷ niệm, Hành trình
 │   ├── lightbox.js               # xem ảnh/clip toàn màn hình
+│   ├── splash.js                 # màn hình mở đầu, nền động, hiệu ứng tim
+│   ├── music.js                  # nhạc nền, bật tắt có nhỏ dần/to dần
+│   ├── wish.js                   # hiệu ứng dung hợp và popup lời chúc
 │   └── main.js                   # vẽ giao diện, sự kiện, khởi động
-├── assets/favicon.svg
+├── assets/favicon.svg, assets/music/   # đặt the-gioi-cua-anh.mp3 vào assets/music/
 ├── .github/workflows/deploy.yml  # tự deploy, tạo env.js từ GitHub Secrets
 ├── .gitignore
 └── .nojekyll
@@ -33,17 +36,16 @@ MTTG/
 │   └── videos/
 │       └── 20240214/     clip của ngày đó, tên file tuỳ ý
 ├── 2_nguoi_yeu/          (cùng cấu trúc)
-├── 3_vo_chong/           (cùng cấu trúc)
-├── 4_co_con/             (cùng cấu trúc)
-├── 5_ve_gia/             (cùng cấu trúc)
-└── avatar/               MTrieu.jpg, TGiang.jpg
+├── 3_vo_chong/, 4_co_con/, 5_ve_gia/
+└── 6_avatar/             MTrieu.jpg, TGiang.jpg
 ```
 
-- Thư mục giai đoạn bắt đầu bằng số `1` đến `5`, theo sau là `_` và tên tuỳ chọn (vd `1_tim_hieu`, `2_nguoi_yeu`). Bên trong đặt `images` và/hoặc `videos`; có thể bỏ qua một trong hai nếu không dùng.
-- Trong `images` hoặc `videos`, tạo thư mục ngày tên `yyyyMMdd`; file bên trong đặt tên gì cũng được. Thêm chữ sau ngày để làm chú thích: thư mục `20240214_Valentine đầu tiên`. Thư mục ngày cũng có thể nằm trực tiếp trong thư mục giai đoạn.
+- Tên thư mục ngày là `yyyyMMdd`; file bên trong đặt tên gì cũng được. Thêm chữ sau ngày để làm chú thích: thư mục `20240214_Valentine đầu tiên`.
 - Ảnh và clip cùng ngày (ở `images` và `videos`) được gom chung một ngày trong app.
-- Avatar dùng quy tắc riêng: tạo thư mục tên `avatar` ngay dưới `MTTG`, đặt ảnh trực tiếp bên trong và đặt tên theo `a` và `b` trong `js/config.js`.
+- Thư mục avatar có tên chứa chữ "ava"; ảnh đặt tên theo `a` và `b` trong `js/config.js`.
 - Thêm kỷ niệm: tạo thư mục ngày trong `images` hoặc `videos`, bỏ file vào, rồi bấm "Cập nhật" trong app.
+- Nhạc nền: đặt `the-gioi-cua-anh.mp3` vào `assets/music/`, hoặc bỏ file mp3 vào thư mục MTTG trên Drive (app tự tìm khi không có file trong assets). Nhạc có bản quyền: đừng để trong repo công khai.
+- Popup lời chúc (bấm trái tim giữa hai avatar): ảnh có cả hai người đặt trong `6_avatar` (ngoài `MTrieu` và `TGiang`); không có thì lấy ngẫu nhiên một ảnh kỷ niệm. Sửa lời chúc trong `js/config.js`, mục `wishes`.
 
 ## Thiết lập một lần
 
@@ -55,7 +57,7 @@ MTTG/
 
 ```
 cp js/env.example.js js/env.js     # rồi điền key và root
-python3/py -m http.server 8000        # mở http://localhost:8000
+python3 -m http.server 8000        # mở http://localhost:8000
 ```
 
 ## Deploy lên GitHub Pages
