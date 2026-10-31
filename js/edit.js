@@ -1,17 +1,17 @@
 // Ghi lên Google Drive (cần đăng nhập Google): thêm/xoá ảnh-clip, lưu danh sách Sắp tới vào sap_toi.txt
 const SCOPE='https://www.googleapis.com/auth/drive',UP='https://www.googleapis.com/upload/drive/v3/files';
-let tc,tp,EO=null;
+let tc,tp,EO=null,WHO='';
 const mOpen=h=>{$('#mi').innerHTML=h;$('#md').className='on'},mClose=()=>{$('#md').className='';$('#mi').innerHTML=''},
 toast=m=>{const t=$('#ts');t.textContent=m;t.className='on';clearTimeout(t._t);t._t=setTimeout(()=>t.className='',3200)};
 function auth(){return new Promise((ok,no)=>{if(TK&&Date.now()<TX)return ok(TK);
 if(!CFG.clientId)return no(Error('Chưa cấu hình clientId để đăng nhập Google (xem README)'));
 if(!window.google||!google.accounts)return no(Error('Chưa tải được Google Sign-In, hãy thử lại sau ít giây'));
 tp={ok,no};tc=tc||google.accounts.oauth2.initTokenClient({client_id:CFG.clientId,scope:SCOPE,
-callback:r=>{if(r.error)tp.no(Error(r.error_description||r.error));else{TK=r.access_token;TX=Date.now()+(r.expires_in-60)*1000;tp.ok(TK)}},
-error_callback:e=>tp.no(Error(e.type=='popup_closed'?'Bạn đã đóng cửa sổ đăng nhập':'Không đăng nhập được, hãy cho phép cửa sổ bật lên (popup)'))});
+callback:r=>{if(r.error)tp.no(Error(r.error_description||r.error));else{TK=r.access_token;TX=Date.now()+(r.expires_in-60)*1000;fetch('https://www.googleapis.com/drive/v3/about?fields=user(emailAddress)',{headers:{Authorization:'Bearer '+TK}}).then(x=>x.json()).then(j=>{WHO=(j.user&&j.user.emailAddress)||''}).catch(()=>{}).finally(()=>tp.ok(TK))}},
+error_callback:e=>tp.no(Error((e.type=='popup_closed'?'Bạn đã đóng cửa sổ đăng nhập. ':'Không mở được cửa sổ đăng nhập (hãy cho phép popup). ')+'Nếu Google báo origin_mismatch, hãy thêm '+location.origin+' vào Authorized JavaScript origins của OAuth client rồi đợi vài phút.'))});
 tc.requestAccessToken({prompt:''})})}
 async function gf(u,o={}){const r=await fetch(u,{...o,headers:{Authorization:'Bearer '+await auth(),...(o.headers||{})}});
-if(!r.ok){let m=r.status;try{m=(await r.json()).error.message}catch(e){}throw Error((r.status==403||r.status==404?'Chưa có quyền chỉnh sửa thư mục MTTG. ':'')+m)}return r}
+if(!r.ok){let m=r.status;try{m=(await r.json()).error.message}catch(e){}throw Error((r.status==403||r.status==404?'Chưa có quyền chỉnh sửa thư mục MTTG'+(WHO?' với tài khoản '+WHO:'')+'. ':'')+m)}return r}
 const J={'Content-Type':'application/json'},
 mkdir=async(name,p)=>(await(await gf(`${API}?fields=id`,{method:'POST',headers:J,body:JSON.stringify({name,mimeType:'application/vnd.google-apps.folder',parents:[p]})})).json()).id,
 trash=id=>gf(`${API}/${id}?fields=id`,{method:'PATCH',headers:J,body:'{"trashed":true}'});
@@ -63,7 +63,7 @@ mOpen('<h3>Đang kiểm tra quyền…</h3>');
 try{DM=await pool([...SEL],id=>gf(`${API}/${id}?fields=id,ownedByMe,parents,owners(displayName)`).then(r=>r.json()))}
 catch(e){return mOpen(`<h3>Không đọc được thông tin tệp</h3><p class=er>${E(e.message)}</p><div class=wb><button class=bt data-a=mc>Đóng</button></div>`)}
 const ot=DM.filter(f=>f.ownedByMe===false),nm=[...new Set(ot.map(f=>f.owners&&f.owners[0]&&f.owners[0].displayName).filter(Boolean))].join(', ');
-mOpen(`<h3>Xoá ${DM.length} tệp?</h3>${DM.length>ot.length?`<p class=mu>${DM.length-ot.length} tệp của bạn sẽ chuyển vào thùng rác Google Drive, khôi phục được trong 30 ngày.</p>`:''}${ot.length?`<p>${ot.length} tệp do ${E(nm||'người khác')} tải lên: Google chỉ cho người tải lên xoá hẳn, nên app sẽ <b>gỡ khỏi album</b>. Tệp vẫn còn trong Drive của họ, họ có thể tự xoá.</p>`:''}<p class=er id=em></p><div class=wb><button class=btp data-a=sdc>${ot.length==DM.length?'Gỡ khỏi album':'Xoá'}</button><button class=bt data-a=mc>Huỷ</button></div>`)}
+mOpen(`<h3>Xoá ${DM.length} tệp?</h3><p class=mu><small>Tài khoản đang dùng: ${E(WHO||'không rõ')}</small></p>${DM.length>ot.length?`<p class=mu>${DM.length-ot.length} tệp của bạn sẽ chuyển vào thùng rác Google Drive, khôi phục được trong 30 ngày.</p>`:''}${ot.length?`<p>${ot.length} tệp do ${E(nm||'người khác')} tải lên: Google chỉ cho người tải lên xoá hẳn, nên app sẽ <b>gỡ khỏi album</b>. Tệp vẫn còn trong Drive của họ, họ có thể tự xoá.</p>`:''}<p class=er id=em></p><div class=wb><button class=btp data-a=sdc>${ot.length==DM.length?'Gỡ khỏi album':'Xoá'}</button><button class=bt data-a=mc>Huỷ</button></div>`)}
 const unpar=(id,ps)=>gf(`${API}/${id}?removeParents=${(ps||[]).join(',')}&fields=id`,{method:'PATCH',headers:J,body:'{}'});
 async function delSel(b){const L=[...DM];b.disabled=true;let n=0;
 try{for(const f of L){b.textContent=`Đang xử lý ${++n}/${L.length}…`;if(f.ownedByMe===false)await unpar(f.id,f.parents);else await trash(f.id);X.items=X.items.filter(x=>x.id!=f.id);SEL.delete(f.id)}
