@@ -64,7 +64,7 @@ Xem dữ liệu chỉ cần API key. Ghi lên Drive thì cần thêm OAuth Clien
 4. Lần đầu bấm Thêm, Xoá hoặc Lưu sẽ hiện cửa sổ đăng nhập Google. Nếu có cảnh báo "Google chưa xác minh ứng dụng": Nâng cao, rồi tiếp tục. Phiên đăng nhập hết hạn sau khoảng 1 giờ, app tự hỏi lại.
 
 - **Thêm:** chọn loại (ảnh hoặc clip), chọn thư mục ngày có sẵn hoặc tạo mới theo ngày. Thư mục mới nằm trong giai đoạn hiện tại, lưu vào `images/yyyyMMdd` hoặc `videos/yyyyMMdd`.
-- **Xoá:** bấm "Chọn để xoá", chọn ảnh/clip rồi Xoá. Tệp chuyển vào thùng rác Drive, khôi phục được trong 30 ngày.
+- **Xoá:** bấm "Chọn để xoá", chọn ảnh/clip rồi Xoá. Google chỉ cho người tải lên (chủ sở hữu tệp) xoá hẳn, kể cả khi thư mục của người khác. Tệp của bạn chuyển vào thùng rác Drive (khôi phục được trong 30 ngày); tệp do người khác tải lên thì app chỉ gỡ khỏi album, tệp vẫn nằm trong Drive của họ và họ có thể tự xoá (đăng nhập app bằng tài khoản của họ).
 - **Sắp tới:** lưu trong file `sap_toi.txt` ở thư mục MTTG (mỗi dòng `yyyy-MM-dd|Tên|y`). Mục đã qua ngày tự biến mất, mục lặp hằng năm thì chuyển sang năm sau.
 
 ## Chạy ở máy

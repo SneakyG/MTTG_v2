@@ -57,9 +57,17 @@ addEventListener('keydown',e=>{if(e.key=='Escape'&&$('#md').className=='on')mClo
 
 // Chọn nhiều ảnh/clip rồi xoá (chuyển vào thùng rác Drive)
 function paintSel(){const b=$('#sbar');document.body.classList.toggle('selm',!!selm);b.className=selm?'on':'';b.innerHTML=selm?`<span>Đã chọn ${SEL.size}</span><button class=bt data-a=sx>Huỷ</button><button class=btp data-a=sdl ${SEL.size?'':'disabled'}>Xoá</button>`:''}
-async function delSel(b){const ids=[...SEL];b.disabled=true;let n=0;
-try{await auth();for(const id of ids){b.textContent=`Đang xoá ${++n}/${ids.length}…`;await trash(id);X.items=X.items.filter(x=>x.id!=id);SEL.delete(id)}
-selm=0;build(X.sf,X.items);saveCache();mClose();render();toast(`Đã xoá ${ids.length} tệp`)}
+let DM=[];
+async function delAsk(){if(!SEL.size)return;try{await auth()}catch(e){return toast(e.message)}
+mOpen('<h3>Đang kiểm tra quyền…</h3>');
+try{DM=await pool([...SEL],id=>gf(`${API}/${id}?fields=id,ownedByMe,parents,owners(displayName)`).then(r=>r.json()))}
+catch(e){return mOpen(`<h3>Không đọc được thông tin tệp</h3><p class=er>${E(e.message)}</p><div class=wb><button class=bt data-a=mc>Đóng</button></div>`)}
+const ot=DM.filter(f=>f.ownedByMe===false),nm=[...new Set(ot.map(f=>f.owners&&f.owners[0]&&f.owners[0].displayName).filter(Boolean))].join(', ');
+mOpen(`<h3>Xoá ${DM.length} tệp?</h3>${DM.length>ot.length?`<p class=mu>${DM.length-ot.length} tệp của bạn sẽ chuyển vào thùng rác Google Drive, khôi phục được trong 30 ngày.</p>`:''}${ot.length?`<p>${ot.length} tệp do ${E(nm||'người khác')} tải lên: Google chỉ cho người tải lên xoá hẳn, nên app sẽ <b>gỡ khỏi album</b>. Tệp vẫn còn trong Drive của họ, họ có thể tự xoá.</p>`:''}<p class=er id=em></p><div class=wb><button class=btp data-a=sdc>${ot.length==DM.length?'Gỡ khỏi album':'Xoá'}</button><button class=bt data-a=mc>Huỷ</button></div>`)}
+const unpar=(id,ps)=>gf(`${API}/${id}?removeParents=${(ps||[]).join(',')}&fields=id`,{method:'PATCH',headers:J,body:'{}'});
+async function delSel(b){const L=[...DM];b.disabled=true;let n=0;
+try{for(const f of L){b.textContent=`Đang xử lý ${++n}/${L.length}…`;if(f.ownedByMe===false)await unpar(f.id,f.parents);else await trash(f.id);X.items=X.items.filter(x=>x.id!=f.id);SEL.delete(f.id)}
+selm=0;build(X.sf,X.items);saveCache();mClose();render();toast(`Đã xoá ${L.length} tệp`)}
 catch(e){build(X.sf,X.items);saveCache();render();$('#em').textContent=e.message;b.disabled=false;b.textContent='Thử lại'}}
 
 // Mục Sắp tới lưu trong sap_toi.txt (thư mục MTTG)
@@ -80,5 +88,5 @@ async function evRemove(b){b.disabled=true;b.textContent='Đang xoá…';try{awa
 const ACTX={mc:()=>mClose(),add:()=>upDlg(),usv:(k,i,b)=>upSave(b),
 sm:()=>{selm=selm?0:1;SEL.clear();render()},sx:()=>{selm=0;SEL.clear();render()},
 sd:(k,i)=>{const L=CURL.filter(x=>x.d==i),all=L.every(x=>SEL.has(x.id));L.forEach(x=>all?SEL.delete(x.id):SEL.add(x.id));render()},
-sdl:()=>{if(SEL.size)mOpen(`<h3>Xoá ${SEL.size} tệp?</h3><p class=mu>Tệp được chuyển vào thùng rác Google Drive, bạn có thể khôi phục trong 30 ngày.</p><p class=er id=em></p><div class=wb><button class=btp data-a=sdc>Xoá</button><button class=bt data-a=mc>Huỷ</button></div>`)},
+sdl:()=>delAsk(),
 sdc:(k,i,b)=>delSel(b),evn:()=>evDlg(),eve:(k,i)=>evDlg(EV[+i]),evs:(k,i,b)=>evSubmit(b),evx:(k,i,b)=>evRemove(b)};
