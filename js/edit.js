@@ -85,8 +85,20 @@ if(!n)return em.textContent='Hãy nhập tên mục này';if(!d)return em.textCo
 b.disabled=true;b.textContent='Đang lưu…';try{await evSave(EO,{d,n,r});mClose();render();toast('Đã lưu')}catch(e){em.textContent=e.message;b.disabled=false;b.textContent='Lưu'}}
 async function evRemove(b){b.disabled=true;b.textContent='Đang xoá…';try{await evSave(EO,null);mClose();render();toast('Đã xoá')}catch(e){$('#em').textContent=e.message;b.disabled=false;b.textContent='Xoá'}}
 
-const ACTX={mc:()=>mClose(),add:()=>upDlg(),usv:(k,i,b)=>upSave(b),
+const ACTX={mc:()=>mClose(),cpe:(k,i)=>capDlg(i),cps:(k,i,b)=>capSave(b,i),add:()=>upDlg(),usv:(k,i,b)=>upSave(b),
 sm:()=>{selm=selm?0:1;SEL.clear();render()},sx:()=>{selm=0;SEL.clear();render()},
 sd:(k,i)=>{const L=CURL.filter(x=>x.d==i),all=L.every(x=>SEL.has(x.id));L.forEach(x=>all?SEL.delete(x.id):SEL.add(x.id));render()},
 sdl:()=>delAsk(),
 sdc:(k,i,b)=>delSel(b),evn:()=>evDlg(),eve:(k,i)=>evDlg(EV[+i]),evs:(k,i,b)=>evSubmit(b),evx:(k,i,b)=>evRemove(b)};
+
+// Chú thích của một ngày nằm trong tên thư mục ngày (yyyyMMdd_Chú thích): sửa = đổi tên các thư mục ngày đó
+function capDlg(d){const fs=X.dfs.filter(f=>f.d==d&&f.s<=CFG.current),cur=[...new Set(fs.map(f=>f.c).filter(Boolean))].join(', ');
+mOpen(`<h3>Chú thích ngày ${fmt(d)}</h3><span class=fgl>Chú thích</span><input id=cpi value="${E(cur)}" maxlength=60 placeholder="Vd: Đi Đà Lạt, sinh nhật em…" autocomplete=off><p class=mu><small>Chú thích được lưu bằng cách đổi tên thư mục ngày trên Drive, vd ${d.replace(/-/g,'')}_Đi Đà Lạt. Để trống để xoá chú thích.</small></p><p class=er id=em></p><div class=wb><button class=btp data-a=cps data-i="${d}">Lưu</button><button class=bt data-a=mc>Huỷ</button></div>`);
+const i=$('#cpi');i&&i.focus()}
+async function capSave(b,d){const cap=$('#cpi').value.replace(/[\\/:*?"<>|]/g,' ').replace(/\s+/g,' ').trim(),em=$('#em'),fs=X.dfs.filter(f=>f.d==d&&f.s<=CFG.current);
+if(!fs.length)return em.textContent='Không tìm thấy thư mục ngày này trên Drive';
+b.disabled=true;b.textContent='Đang lưu…';
+try{await auth();for(const f of fs){await gf(`${API}/${f.id}?fields=id`,{method:'PATCH',headers:J,body:JSON.stringify({name:d.replace(/-/g,'')+(cap?'_'+cap:'')})});f.c=cap}
+X.items.forEach(x=>{if(x.d==d&&fs.some(f=>f.s==x.s))x.c=cap});saveCache();mClose();render();toast(cap?'Đã lưu chú thích':'Đã xoá chú thích')}
+catch(er){em.textContent=er.message;b.disabled=false;b.textContent='Lưu'}}
+document.addEventListener('keydown',e=>{if(e.key=='Enter'&&e.target.id=='cpi'){const s=document.querySelector('[data-a=cps]');s&&s.click()}});
