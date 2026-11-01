@@ -23,9 +23,9 @@ fl.sort((a,b)=>a.name.localeCompare(b.name)).forEach(f=>{const x=dm[f.parents[0]
 it.sort((a,b)=>b.d.localeCompare(a.d));build(sf,it);
 const pics=(await pa).sort((x,y)=>x.name.localeCompare(y.name)),bn=f=>f.name.replace(/\.[^.]*$/,'').toLowerCase(),pk=(n,i)=>(pics.find(f=>bn(f)==n.toLowerCase())||pics[i])?.id;
 AV={a:pk(CFG.a,0),b:pk(CFG.b,1)};AV.c=pics.filter(f=>f.id!=AV.a&&f.id!=AV.b).map(f=>f.id);
-const rf=await au,aus=rf.filter(f=>/^audio\//.test(f.mimeType));AUD=(aus.find(f=>/gioi/i.test(f.name))||aus[0]||{}).id||'';EVF=(rf.find(f=>f.name=='sap_toi.txt')||{}).id||'';
+const rf=await au,aus=rf.filter(f=>/^audio\//.test(f.mimeType));AUD=(aus.find(f=>/gioi/i.test(f.name))||aus[0]||{}).id||'';EVF=(rf.find(f=>f.name=='sap_toi.txt')||{}).id||'';PLF=(rf.find(f=>f.name=='ke_hoach.json')||{}).id||'';
 X.mfs=mf.map(f=>({id:f.id,n:by[f.id],k:mk[f.id]}));X.dfs=Object.keys(dm).map(id=>({id,...dm[id]}));
-await evLoad();saveCache()}
-const saveCache=()=>{try{localStorage.mttg=JSON.stringify({sf:X.sf,it:X.items,AV,AUD,df:X.dfs,mf:X.mfs,evf:EVF,evt:EVT})}catch(e){}};
-try{const c=JSON.parse(localStorage.mttg||'null');if(c){build(c.sf,c.it);AV=c.AV||{};AUD=c.AUD||'';X.dfs=c.df||[];X.mfs=c.mf||[];EVF=c.evf||'';EVT=c.evt||'';evParse(EVT)}}catch(e){}
+await evLoad();await plLoad();saveCache()}
+const saveCache=()=>{try{localStorage.mttg=JSON.stringify({sf:X.sf,it:X.items,AV,AUD,df:X.dfs,mf:X.mfs,evf:EVF,evt:EVT,plf:PLF,plt:PLT})}catch(e){}};
+try{const c=JSON.parse(localStorage.mttg||'null');if(c){build(c.sf,c.it);AV=c.AV||{};AUD=c.AUD||'';X.dfs=c.df||[];X.mfs=c.mf||[];EVF=c.evf||'';EVT=c.evt||'';evParse(EVT);PLF=c.plf||'';PLT=c.plt||'';plParse(PLT)}}catch(e){}
 

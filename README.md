@@ -20,6 +20,7 @@ love-story/
 │   ├── music.js                  # nhạc nền, bật tắt có nhỏ dần/to dần
 │   ├── wish.js                   # hiệu ứng dung hợp và popup lời chúc
 │   ├── edit.js                   # đăng nhập Google, thêm/xoá ảnh-clip, mục Sắp tới
+│   ├── plans.js                  # tab Tương lai: kế hoạch của hai đứa
 │   └── main.js                   # vẽ giao diện, sự kiện, khởi động
 ├── assets/favicon.svg, assets/music/   # đặt the-gioi-cua-anh.mp3 vào assets/music/
 ├── .github/workflows/deploy.yml  # tự deploy, tạo env.js từ GitHub Secrets
@@ -41,7 +42,7 @@ MTTG/
 └── 6_avatar/             MTrieu.jpg, TGiang.jpg
 ```
 
-- Tên thư mục ngày là `yyyyMMdd`; file bên trong đặt tên gì cũng được. Thêm chữ sau ngày để làm chú thích: thư mục `20240214_Valentine đầu tiên`.
+- Tên thư mục ngày là `yyyyMMdd`; file bên trong đặt tên gì cũng được. Thêm chữ sau ngày để làm chú thích: thư mục `20240214_Valentine đầu tiên` (hoặc bấm biểu tượng bút cạnh chú thích trong app, app sẽ đổi tên thư mục giúp bạn).
 - Ảnh và clip cùng ngày (ở `images` và `videos`) được gom chung một ngày trong app.
 - Thư mục avatar có tên chứa chữ "ava"; ảnh đặt tên theo `a` và `b` trong `js/config.js`.
 - Thêm kỷ niệm: tạo thư mục ngày trong `images` hoặc `videos`, bỏ file vào, rồi bấm "Cập nhật" trong app.
@@ -66,6 +67,7 @@ Xem dữ liệu chỉ cần API key. Ghi lên Drive thì cần thêm OAuth Clien
 - **Thêm:** chọn loại (ảnh hoặc clip), chọn thư mục ngày có sẵn hoặc tạo mới theo ngày. Thư mục mới nằm trong giai đoạn hiện tại, lưu vào `images/yyyyMMdd` hoặc `videos/yyyyMMdd`.
 - **Xoá:** bấm "Chọn để xoá", chọn ảnh/clip rồi Xoá. Google chỉ cho người tải lên (chủ sở hữu tệp) xoá hẳn, kể cả khi thư mục của người khác. Tệp của bạn chuyển vào thùng rác Drive (khôi phục được trong 30 ngày); tệp do người khác tải lên thì app chỉ gỡ khỏi album, tệp vẫn nằm trong Drive của họ và họ có thể tự xoá (đăng nhập app bằng tài khoản của họ).
 - **Sắp tới:** lưu trong file `sap_toi.txt` ở thư mục MTTG (mỗi dòng `yyyy-MM-dd|Tên|y`). Mục đã qua ngày tự biến mất, mục lặp hằng năm thì chuyển sang năm sau.
+- **Tương lai:** tab kế hoạch của hai đứa (du lịch, nhà cửa, quỹ chung…), lưu trong `ke_hoach.json` ở thư mục MTTG. Xem không cần đăng nhập, thêm/sửa cần đăng nhập Google như trên.
 
 ## Chạy ở máy
 
